@@ -97,12 +97,12 @@ void SharpBridge::Player::removeWeapon(unsigned int weaponId) // Use weapon ID 0
 
 void SharpBridge::Player::setHealth(int hp)
 {
-	player->setHealth(hp);
+	player->setHealth(hp + 100);
 }
 
 int SharpBridge::Player::getHealth() //Ranges from 0-200 when the player is alive, negative values if dead
 {
-	return player->getHealth();
+	return player->getHealth() - 100;
 }
 
 void SharpBridge::Player::setColor(unsigned int hex) //RGB
@@ -298,7 +298,7 @@ void SharpBridge::Player::showBlip(int blipId, bool show)
 
 void SharpBridge::Player::cam_setPos(Vector3^ pos, unsigned int camWorld)
 {
-	if(!pos) return player->cam_setPos(NULL, camWorld);
+	if(pos == nullptr) return player->cam_setPos(NULL, camWorld);
 	apiMath::Vector3 v(pos->x, pos->y, pos->z);
 	player->cam_setPos(&v, camWorld);
 }
@@ -356,7 +356,7 @@ unsigned int SharpBridge::Player::getWeaponsSize()
 	return player->getWeaponsSize();
 }
 
-void SharpBridge::Player::getWeaponData(unsigned int index, int^ weapon, int^ ammo) //Index throws exception, use getWeaponsSize for array size
+void SharpBridge::Player::getWeaponData(unsigned int index, int% weapon, int%  ammo) //Index throws exception, use getWeaponsSize for array size
 {
 	int w, a;
 	player->getWeaponData(index, w, a);

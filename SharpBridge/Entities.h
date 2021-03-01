@@ -21,6 +21,7 @@ namespace SharpBridge {
 		static void deleteCheckPoint(int id);
 
 		static Player^ getPlayer(int id);
+		static System::Collections::Generic::List<Player^>^ getPlayers();
 
 		static Vehicle^ createVehicle(int mId, Vector3^ pos, Vector3^ rot, int c1, int c2, int c3, int c4, unsigned int vWorld);
 		static Vehicle^ getVehicle(int id);

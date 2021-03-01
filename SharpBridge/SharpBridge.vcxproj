@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../SDK/API</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../SDK</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>../SDK/ivmpServer.lib</AdditionalDependencies>
@@ -126,6 +126,7 @@
     <ClInclude Include="ColoredChat.h" />
     <ClInclude Include="Dialog.h" />
     <ClInclude Include="Entities.h" />
+    <ClInclude Include="Log.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
@@ -133,6 +134,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SharpBridge.h" />
     <ClInclude Include="Skins.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Vehicle.h" />
     <ClInclude Include="VehicleModels.h" />
     <ClInclude Include="World.h" />
@@ -145,11 +147,12 @@
     <ClCompile Include="ColoredChat.cpp" />
     <ClCompile Include="Dialog.cpp" />
     <ClCompile Include="Entities.cpp" />
+    <ClCompile Include="Log.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayerEvents.cpp" />
     <ClCompile Include="SharpBridge.cpp" />
     <ClCompile Include="Skins.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Vehicle.cpp" />
     <ClCompile Include="VehicleModels.cpp" />
     <ClCompile Include="World.cpp" />

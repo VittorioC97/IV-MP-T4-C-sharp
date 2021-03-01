@@ -11,25 +11,17 @@ namespace Example
     {
 		override public bool onPlayerConnect(int playerid)
 		{
-			Player player = Entities.getPlayer(playerid);
-			if (player == null) return false;
-			player.sendMsg("(1) Welcome online", 0xFF00FFFF);
-			Chat.sendMsgToAll(player.getNick() + "(" + playerid + ") has joined the server", 0xFFFFFFFF);
-			return true;
+			return Services.PlayerConnect.onPlayerConnect(playerid);
 		}
 
 		override public bool onPlayerCredentials(int playerid)
 		{
-			Player player = Entities.getPlayer(playerid);
-			if (player == null) return false;
-			player.sendMsg("(2) Spawning", 0xFF00FFFF);
-			player.spawn(new Vector3(1080.19f, 278.101f, 30.2316f));
-			return true;
+			return Services.PlayerConnect.onPlayerCredentials(playerid);
 		}
 
 		override public void onPlayerDisconnect(int playerid, int reason)
 		{
-			Console.WriteLine("(" + playerid + ") left the server: " + reason);
+			Services.PlayerDisconnect.handleDisconnect(playerid, reason);
 		}
 
 		override public void onPlayerAfk(int playerid, bool status) { }
@@ -46,15 +38,20 @@ namespace Example
 			Chat.createMultiColored(1);
 			uint rgba = player.getColor();
 			uint argb = (rgba << 24) | (rgba >> 8);
-			Chat.addMsg(1, player.getNick() + "(" + playerid + "): ", argb);
+			Chat.addMsg(1, player.getNick() + "(" + playerid + "):", argb);
 
-			Chat.addMsg(1, txt, 0xFFFFFFFF);
+			Chat.addMsg(1, " " + txt, 0xFFFFFFFF);
 
 			Chat.sendColoredMsgToAll(1);
 			Chat.disposeMultiColored(1);
 		}
 
-		override public void onPlayerDeath(int playerid, int agentType, int agentId) { }
+        public override void onPlayerCommand(int playerid, string txt)
+        {
+			Commands.CommandsProcessor.processCommand(playerid, ref txt);
+        }
+
+        override public void onPlayerDeath(int playerid, int agentType, int agentId) { }
 		override public void onPlayerHealthChange(int playerid, int agentType, int agentId, int boneId) { }
 		override public void onPlayerArmorChange(int playerid, int agentType, int agentId, int boneId) { }
 
@@ -63,7 +60,10 @@ namespace Example
 		override public void onPlayerExitVehicle(int playerid, int vehicleId, int seatId) { }
 
 		override public bool onPlayerWeaponChange(int playerid, int weapon, int ammo) { return true; }
-		override public bool onPlayerWeaponsArrive(int playerid) { return true; }
+		override public bool onPlayerWeaponsArrive(int playerid)
+		{ 
+			return Services.UpdateWeapons.onPlayerWeaponsArrive(playerid);
+		}
 
 		override public void onPlayerEnterCheckpoint(int playerid, int checkPointId) { }
 		override public void onPlayerExitCheckpoint(int playerid, int checkPointId) { }

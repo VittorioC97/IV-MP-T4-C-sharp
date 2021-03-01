@@ -13,7 +13,7 @@ namespace SharpBridge {
 		static int running;
 
 	public:
-		static void startIVMPServer();
+		static void startIVMPServer(int port, String^ serverName, String^ serverLocation, String^ serverSite, bool masterList, bool gtaIV);
 
 		static void controlServerNow();
 		static void registerModuleEvents(String^ id, ServerEvents^ e);

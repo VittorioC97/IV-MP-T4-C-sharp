@@ -5,29 +5,30 @@
 #include "BridgeEvents.h"
 #include <ctime>
 #include <stdio.h>
+#include "Timer.h"
 #include <msclr/marshal.h>
 
-void SharpBridge::bridgeServer::startIVMPServer()
-{
+void SharpBridge::bridgeServer::startIVMPServer(int port, String^ serverName, String^ serverLocation, String^ serverSite, 
+	bool masterList, bool gtaIV) {
 	if(running) return;
+
+	msclr::interop::marshal_context ctx;
+
 	pulseRate = 50;
 	running = true;
-	initRaknet(8888, "Sharp Test", "Somewhere", "www.iv-mp.eu", false, true);
+	initRaknet(8888, ctx.marshal_as<const char*>(serverName), ctx.marshal_as<const char*>(serverLocation), 
+		ctx.marshal_as<const char*>(serverSite), masterList, gtaIV);
 	BridgeEvents::initContainer();
 }
 
 void SharpBridge::bridgeServer::controlServerNow()
 {
-	clock_t lTime = 0;
 	while(true)
 	{
 		clock_t cTime = clock();
 		pulseServer();
+		SharpBridge::Timer::Manager::Pulse(cTime);
 		Sleep(pulseRate);
-		if(cTime > lTime)
-		{
-			lTime = cTime + 500;
-		}
 	}
 }
 

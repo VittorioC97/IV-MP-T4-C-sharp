@@ -153,7 +153,9 @@ namespace apiPlayer
 	DLL void sendColoredMsgToAll(int msgId, int chatId = 0);
 
 	DLL player& get(int id); //Throws exception
+	DLL player* getPlayer(int id);
 	DLL bool isOn(int id);
+	DLL void getPlayers(std::vector<player*>& vec);
 
 	DLL void setDefaultServerBlips(bool b);
 

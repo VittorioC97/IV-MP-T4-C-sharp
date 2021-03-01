@@ -107,7 +107,7 @@ namespace SharpBridge
 
 		void requestWeapons(); //The result will arrive as a callback for registerPlayerWeaponsArrived
 		unsigned int getWeaponsSize();
-		void getWeaponData(unsigned int index, int^ weapon, int^ ammo); //Index throws exception, use getWeaponsSize for array size
+		void getWeaponData(unsigned int index, int% weapon, int% ammo); //Index throws exception, use getWeaponsSize for array size
 
 		unsigned int getRoomKey();
 

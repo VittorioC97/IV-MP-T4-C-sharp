@@ -47,6 +47,16 @@ SharpBridge::Player^ SharpBridge::Entities::getPlayer(int id)
 	return apiPlayer::isOn(id) ? gcnew Player(id) : nullptr;
 }
 
+System::Collections::Generic::List<SharpBridge::Player^>^ SharpBridge::Entities::getPlayers()
+{
+	System::Collections::Generic::List<Player^>^ list = gcnew System::Collections::Generic::List<Player^>();
+	std::vector<apiPlayer::player*> vec;
+	apiPlayer::getPlayers(vec);
+	size_t i = 0, s = vec.size();
+	for(i; i < s; i++) list->Add(gcnew Player(vec[i]->getID()));
+	return list;
+}
+
 SharpBridge::Vehicle^ SharpBridge::Entities::createVehicle(int mId, Vector3^ pos, Vector3^ rot, int c1, int c2, int c3, int c4, unsigned int vWorld)
 {
 	apiMath::Vector3 p(pos->x, pos->y, pos->z), r(rot->x, rot->y, rot->z);

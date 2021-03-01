@@ -1,5 +1,6 @@
 #include "apiMath.h"
 #include <exporting.h>
+#include <vector>
 
 #ifndef apiVehicle_H
 #define apiVehicle_H
@@ -64,6 +65,8 @@ namespace apiVehicle
 	DLL bool deleteVehicle(int vehicleId); //Throws exception
 	DLL bool isVehicle(int vehicleId);
 	DLL vehicle& getVehicle(int vehicleId); //Throws exception
+	DLL vehicle* get(int vehicleId);
+	DLL void getAll(std::vector<vehicle*>& vec);
 	DLL void toggleAutoComponents(bool b); //This controlls whether the vehicles will spawn with default components.
 }
 

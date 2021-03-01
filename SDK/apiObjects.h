@@ -1,5 +1,6 @@
 #include "apiMath.h"
 #include <exporting.h>
+#include <vector>
 
 #ifndef apiObjects_H
 #define apiObjects_H
@@ -9,6 +10,7 @@ namespace apiObjects
 	class object
 	{
 		private:
+			int id;
 			apiMath::Vector3 pos;
 			apiMath::Quaternion rot;
 
@@ -22,26 +24,28 @@ namespace apiObjects
 			float streamDistance;
 
 		public:
-			object(apiMath::Vector3 pos, apiMath::Quaternion rot, unsigned int objHex, 
+			object(int id, apiMath::Vector3 pos, apiMath::Quaternion rot, unsigned int objHex, 
 				unsigned int vWorld, bool hasOffset, unsigned int interior, int alpha);
 			~object();
 
-			void copyPos(apiMath::Vector3& buf){ buf = pos; }
+			DLL void copyPos(apiMath::Vector3& buf){ buf = pos; }
+			DLL void copyRot(apiMath::Quaternion& quat) { quat = rot; }
 
 			DLL apiMath::Vector3 getPos();
 			DLL apiMath::Quaternion getRot();
 			DLL unsigned int getWorld();
 			DLL unsigned int getModel();
 
-			bool hasOffset();
-			unsigned int getInterior();
-			int getAlpha();
+			DLL bool hasOffset();
+			DLL unsigned int getInterior();
+			DLL int getAlpha();
 
-			void setPos(apiMath::Vector3 pos);
-			void setRot(apiMath::Quaternion rot);
+			void setPos(apiMath::Vector3 pos); //internal only
+			void setRot(apiMath::Quaternion rot); //internal only
 
-			DLL void setStreamDis(float dis) { this->streamDistance = dis; }
-			float getStream() { return this->streamDistance; }
+			DLL void setStreamDis(float dis);
+			DLL float getStream() { return this->streamDistance; }
+			DLL int getId() { return this->id; }
 	};
 
 	DLL int addNew(apiMath::Vector3 pos, apiMath::Quaternion rot, unsigned int objHex, 
@@ -49,6 +53,7 @@ namespace apiObjects
 	DLL void remove(int id);
 	DLL bool isValid(int id);
 	DLL object* get(int id); //Throws exception
+	DLL void getAll(std::vector<object*>& vec);
 
 	DLL void moveObject(int id, apiMath::Vector3 pos, apiMath::Quaternion rot, unsigned int time);
 

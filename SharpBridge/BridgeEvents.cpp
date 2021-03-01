@@ -7,155 +7,265 @@
 
 bool onPlayerConnect(int playerid)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+	try
 	{
-		if(!i.Value->onPlayerConnect(playerid)) return false;
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			if(!i.Value->onPlayerConnect(playerid)) return false;
+		}
 	}
+	catch(std::exception&){}
 	return true;
 }
 
 bool onPlayerCredentials(int playerid)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+	try
 	{
-		if(!i.Value->onPlayerCredentials(playerid)) return false;
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			if(!i.Value->onPlayerCredentials(playerid)) return false;
+		}
 	}
+	catch(std::exception&){}
 	return true;
 }
 
 void onPlayerDisconnect(int playerid, int reason)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) i.Value->onPlayerDisconnect(playerid, reason);
+	try
+	{
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) i.Value->onPlayerDisconnect(playerid, reason);
+	}
+	catch(std::exception&){}
 }
 
 void onPlayerAfk(int playerid, bool status)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) i.Value->onPlayerAfk(playerid, status);
+	try
+	{
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) i.Value->onPlayerAfk(playerid, status);
+	}
+	catch(std::exception&){}
 }
 
 bool onPlayerTeamSpeak(int playerid, int status, int channel)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+	try
 	{
-		if(!i.Value->onPlayerTeamSpeak(playerid, status, channel)) return false;
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			if(!i.Value->onPlayerTeamSpeak(playerid, status, channel)) return false;
+		}
 	}
+	catch(std::exception&){}
 	return true;
 }
 
 void onPlayerChat(int playerid, const char* txt)
 {
-	String^ s = gcnew String(txt);
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) i.Value->onPlayerChat(playerid, s);
+	try
+	{
+		String^ s = gcnew String(txt);
+		if(txt[0] == '/')
+		{
+			for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) i.Value->onPlayerCommand(playerid, s);
+		}
+		else
+		{
+			for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) i.Value->onPlayerChat(playerid, s);
+		}
+	}
+	catch(std::exception&){}
 }
 
 void onPlayerDeath(int playerid, int agentType, int agentId)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) i.Value->onPlayerDeath(playerid, agentType, agentId);
+	try
+	{
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			i.Value->onPlayerDeath(playerid, agentType, agentId);
+		}
+	}
+	catch(std::exception&){}
 }
 
 void onPlayerHealthChange(int playerid, int agentType, int agentId, int boneId)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) {
-		i.Value->onPlayerHealthChange(playerid, agentType, agentId, boneId);
+	try
+	{
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			i.Value->onPlayerHealthChange(playerid, agentType, agentId, boneId);
+		}
 	}
-}
+	catch(std::exception&){}
+	}
 
 void onPlayerArmorChange(int playerid, int agentType, int agentId, int boneId)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) {
-		i.Value->onPlayerArmorChange(playerid, agentType, agentId, boneId);
+	try
+	{
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			i.Value->onPlayerArmorChange(playerid, agentType, agentId, boneId);
+		}
 	}
+	catch(std::exception&){}
 }
 
 void onPlayerEnteringVehicle(int playerid, int vehicleId, int seatId, bool carjack)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) {
-		i.Value->onPlayerEnteringVehicle(playerid, vehicleId, seatId, carjack);
+	try
+	{
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			i.Value->onPlayerEnteringVehicle(playerid, vehicleId, seatId, carjack);
+		}
 	}
+	catch(std::exception&){}
 }
 
 void onPlayerEnteredVehicle(int playerid, int vehicleId, int seatId)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) {
-		i.Value->onPlayerEnteredVehicle(playerid, vehicleId, seatId);
+	try
+	{
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			i.Value->onPlayerEnteredVehicle(playerid, vehicleId, seatId);
+		}
 	}
+	catch(std::exception&){}
 }
 
 void onPlayerExitVehicle(int playerid, int vehicleId, int seatId)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) {
+	try
+	{
+	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+	{
 		i.Value->onPlayerExitVehicle(playerid, vehicleId, seatId);
 	}
+	}
+	catch(std::exception&){}
 }
 
 bool onPlayerWeaponChange(int playerid, int weapon, int ammo)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+	try
 	{
-		if(!i.Value->onPlayerWeaponChange(playerid, weapon, ammo)) return false;
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			if(!i.Value->onPlayerWeaponChange(playerid, weapon, ammo)) return false;
+		}
 	}
+	catch(std::exception&){}
 	return true;
 }
 
 bool onPlayerWeaponsArrive(int playerid)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+	try
 	{
-		if(!i.Value->onPlayerWeaponsArrive(playerid)) return false;
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			if(!i.Value->onPlayerWeaponsArrive(playerid)) return false;
+		}
 	}
+	catch(std::exception&){}
 	return true;
 }
 
 void onPlayerEnterCheckpoint(int playerid, int checkPointId)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) {
-		i.Value->onPlayerEnterCheckpoint(playerid, checkPointId);
+	try
+	{
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			i.Value->onPlayerEnterCheckpoint(playerid, checkPointId);
+		}
 	}
+	catch(std::exception&){}
 }
 
 void onPlayerExitCheckpoint(int playerid, int checkPointId)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) {
-		i.Value->onPlayerExitCheckpoint(playerid, checkPointId);
+	try
+	{
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			i.Value->onPlayerExitCheckpoint(playerid, checkPointId);
+		}
 	}
+	catch(std::exception&){}
 }
 
 bool onPlayerRespawn(int playerid)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+	try
 	{
-		if(!i.Value->onPlayerRespawn(playerid)) return false;
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			if(!i.Value->onPlayerRespawn(playerid)) return false;
+		}
 	}
+	catch(std::exception&){}
 	return true;
 }
 
 void onPlayerSpawnEntity(int playerid, int agentType, int agentId, int boneId)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) {
-		i.Value->onPlayerSpawnEntity(playerid, agentType, agentId, boneId);
+	try
+	{
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			i.Value->onPlayerSpawnEntity(playerid, agentType, agentId, boneId);
+		}
 	}
+	catch(std::exception&){}
 }
 
 void onPlayerDialogResponse(int playerid, unsigned int dialogId, int buttonId, int rowId, int customId)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) {
-		i.Value->onPlayerDialogResponse(playerid, dialogId, buttonId, rowId, customId);
+	try
+	{
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			i.Value->onPlayerDialogResponse(playerid, dialogId, buttonId, rowId, customId);
+		}
 	}
+	catch(std::exception&){}
 }
 
 void onVehicleChangeHp(int vehicleId, int health)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) i.Value->onVehicleChangeHp(vehicleId, health);
+	try
+	{
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) i.Value->onVehicleChangeHp(vehicleId, health);
+	}
+	catch(std::exception&){}
 }
 
 void onVehicleTyreBurst(int vehicleId, unsigned int tyre)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) i.Value->onVehicleTyreBurst(vehicleId, tyre);
+	try
+	{
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) i.Value->onVehicleTyreBurst(vehicleId, tyre);
+	}
+	catch(std::exception&){}
 }
 
 void onPlayerKey(apiPlayer::player& p, unsigned int virtualKey, bool keyUp)
 {
-	for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents) i.Value->onPlayerKey(p.getID(), virtualKey, keyUp);
+	try
+	{
+		for each(KeyValuePair<String^, SharpBridge::ServerEvents^> i in BridgeEvents::moduleEvents)
+		{
+			i.Value->onPlayerKey(p.getID(), virtualKey, keyUp);
+		}
+	}
+	catch(std::exception&){}
 }
 
 void BridgeEvents::initContainer()

@@ -17,6 +17,7 @@ namespace SharpBridge {
 		virtual bool onPlayerTeamSpeak(int playerid, int status, int channel){ return true; }
 
 		virtual void onPlayerChat(int playerid, String^ txt){}
+		virtual void onPlayerCommand(int playerid, String^ txt){}
 
 		virtual void onPlayerDeath(int playerid, int agentType, int agentId){}
 		virtual void onPlayerHealthChange(int playerid, int agentType, int agentId, int boneId){}
