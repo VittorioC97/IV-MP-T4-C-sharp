@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace Example.Repositories
 {
-    class ReposityConnection : DbContext
+    public class ReposityConnection : DbContext
     {
         public ReposityConnection() : base("server=127.0.0.1;port=3307;database=csharp;uid=root;password=1234")
         {
-
         }
     }
 }
