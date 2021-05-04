@@ -10,6 +10,7 @@ namespace SharpBridge {
 
 	public:
 		Object(int id);
+		void Destroy();
 
 		Vector3^ getPos();
 		Quaternion^ getRot();
