@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,26 +9,21 @@ using System.Threading.Tasks;
 
 namespace Example.Models
 {
-    class User
+    [Table("users")]
+    public class UserEF
     {
-        [Key]
+        [ForeignKey("entity")]
         public int id { get; set; }
 
         [Index(IsUnique = true)]
         public string name { get; set; }
         public string password { get; set; }
         public int moneyBank { get; set; }
-        public float x { get; set; }
-        public float y { get; set; }
-        public float z { get; set; }
         public string clothes { get; set; }
         public byte hp { get; set; }
         public byte armor { get; set; }
 
-        [ForeignKey("container")]
-        public int containerId { get; set; }
-
         [JsonIgnore]
-        public virtual UserContainer container { get; set; }
+        public virtual EntityEF entity { get; set; }
     }
 }
