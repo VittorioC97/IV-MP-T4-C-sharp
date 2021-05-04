@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,26 +27,25 @@ namespace Example.Commands
             {
                 using (Repositories.UserRepository accs = new Repositories.UserRepository())
                 {
-                    Models.UserContainer uc = new Models.UserContainer
+                    Models.EntityEF uc = new Models.EntityEF
                     {
-                        type = 0,
-                        items = new List<Models.UserItem>(),
-                        user = new List<Models.User>()
-                    };
-                    uc.user.Add(new Models.User
-                    {
-                        name = player.getNick(),
-                        password = Services.Hashing.SHA2(ref pass),
-                        container = uc,
-                        clothes = "1",
+                        items = new List<Models.ItemEF>(),
+                        user = new Models.UserEF
+                        {
+                            name = player.getNick(),
+                            password = Services.Hashing.SHA2(ref pass),
+                            clothes = "1",
+                            hp = 100,
+                            armor = 0,
+                            moneyBank = 100
+                        },
                         x = 1075.0f,
                         y = 278.0f,
                         z = 30.2f,
-                        hp = 100,
-                        armor = 0,
-                        moneyBank = 100
-                    });
-                    accs.containers.Add(uc);
+                    };
+                    uc.user.entity = uc;
+
+                    accs.entities.Add(uc);
                     accs.SaveChanges();
 
                     player.sendMsg($"Account created with pass '{pass}'. Use /login to proceed", ChatColor.SUCCESS);
@@ -78,8 +77,8 @@ namespace Example.Commands
                 string pass = ((string)param[0]).ToLower();
                 using (Repositories.UserRepository accs = new Repositories.UserRepository())
                 {
-                    Models.User acc = accs.users.Where(i => i.name == user).
-                        Include(i => i.container).Include(i => i.container.items).FirstOrDefault();
+                    Models.UserEF acc = accs.users.Where(i => i.name == user).
+                        Include(i => i.entity).Include(i => i.entity.items).FirstOrDefault();
 
                     if(acc == null)
                     {
@@ -102,14 +101,22 @@ namespace Example.Commands
                     player.setHealth(acc.hp);
                     player.setArmor(acc.armor);
                     player.setFrozen(false);
+                    player.cam_setPos(null, 1);
                     player.cam_attachOnPlayer(-1);
+                    player.setWorld(1);
                     player.drawInfoText("~g~Welcome back!", 5000);
 
-                    foreach(Models.UserItem item in acc.container.items)
+                    List<short> givenAmmoTypes = new List<short>();
+                    foreach(var item in acc.entity.items)
                     {
-                        if(item.type > 0 && item.type < 19)
+                        Models.ItemTypesEF typ = Game.ItemTypesManager.GetItemTypeByItem(item);
+
+                        if (typ.weapon != null)
                         {
-                            player.giveWeapon((uint)item.type, (uint)item.amount);
+                            Models.ItemEF ammo = acc.entity.items.Where(j => j.type == typ.weapon.ammoItem).FirstOrDefault();
+                            if (ammo == null || givenAmmoTypes.Count(j => j == ammo.type) != 0) continue;
+                            givenAmmoTypes.Add(ammo.type);
+                            player.giveWeapon((uint)item.type, (uint)ammo.amount);
                         }
                     }
                 }
