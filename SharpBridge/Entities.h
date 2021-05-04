@@ -25,12 +25,10 @@ namespace SharpBridge {
 
 		static Vehicle^ createVehicle(int mId, Vector3^ pos, Vector3^ rot, int c1, int c2, int c3, int c4, unsigned int vWorld);
 		static Vehicle^ getVehicle(int id);
-		static void deleteVehicle(int id);
 
 		static SharpBridge::Object^ createObject(Vector3^ pos, Quaternion^ rot, unsigned int objHex,
 			unsigned int vWorld, bool hasOffset, unsigned int interior, int alpha);
 		static SharpBridge::Object^ getObject(int id);
-		static void deleteObject(int id);
 
 		static Dialog^ createDialog(unsigned int id, String^ windowName, unsigned int columns);
 		static Dialog^ getDialog(unsigned int id);
