@@ -5,6 +5,11 @@ SharpBridge::Vehicle::Vehicle(int id)
 	veh = &apiVehicle::getVehicle(id);
 }
 
+void SharpBridge::Vehicle::Destroy()
+{
+	apiVehicle::deleteVehicle(veh->getId());
+}
+
 SharpBridge::Vector3^ SharpBridge::Vehicle::getPosition()
 {
 	apiMath::Vector3 v = veh->getPosition();
