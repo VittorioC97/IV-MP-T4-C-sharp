@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +8,9 @@ namespace Example.Game
 {
     class Account
     {
-        private Models.User user { get; set; }
+        private Models.UserEF user { get; set; }
 
-        public Account(Models.User user)
+        public Account(Models.UserEF user)
         {
             this.user = user;
         }
@@ -51,13 +51,13 @@ namespace Example.Game
         }
         public SharpBridge.Vector3 getPos()
         {
-            return new SharpBridge.Vector3(user.x, user.y, user.z);
+            return new SharpBridge.Vector3(user.entity.x, user.entity.y, user.entity.z);
         }     
         public void updatePos(SharpBridge.Vector3 v)
         {
-            user.x = v.x;
-            user.y = v.y;
-            user.z = v.z;
+            user.entity.x = v.x;
+            user.entity.y = v.y;
+            user.entity.z = v.z;
         }
         public void updateHealth(int hp, int armor)
         {
@@ -73,7 +73,7 @@ namespace Example.Game
                     Console.WriteLine("Saving Player");
 
                     bool mustAttach = false;
-                    foreach(Models.UserItem item in user.container.items)
+                    foreach(Models.ItemEF item in user.entity.items)
                     {
                         if (item.id == 0) mustAttach = true;
                         else if(item.mustSave)
@@ -84,11 +84,12 @@ namespace Example.Game
                     }
 
                     if (mustAttach) accs.users.Attach(user); //adds new items
-                                   
+
+                    accs.Entry(user.entity).State = System.Data.Entity.EntityState.Modified;
                     accs.Entry(user).State = System.Data.Entity.EntityState.Modified;
                     accs.SaveChanges();
 
-                    Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(user.container.items));
+                    Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(user.entity.items));
                 }
             }
             catch (Exception e)
@@ -103,17 +104,21 @@ namespace Example.Game
 
         public void updateWeapon(byte model, short amount)
         {
-            Models.UserItem item = user.container.items.Where(i => i.type == model).FirstOrDefault();
+            Models.ItemTypesEF weaponItem = ItemTypesManager.GetWeaponFromGameWeapon(model);
+            if (weaponItem == null) return;
+
+            Models.ItemEF item = user.entity.items.Where(i => i.type == weaponItem.weapon.ammoItem).FirstOrDefault();
             if(item == null)
             {
-                user.container.items.Add(new Models.UserItem
+                item = new Models.ItemEF
                 {
-                    container = user.container,
+                    entity = user.entity,
                     type = model,
                     amount = amount,
-                    fk = user.container.id,
+                    fk = user.entity.id,
                     mustSave = false
-                });
+                };
+                user.entity.items.Add(item);
             }
             else if(item.amount != amount)
             {
