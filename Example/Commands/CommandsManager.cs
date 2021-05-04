@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,6 +45,11 @@ namespace Example.Commands
 
             Add("/weapon", WeaponCommands.Spawn, "u", "Usage: /weapon [model id]. Ids: 1-5, 7, 9-18");
             Add("/disarm", WeaponCommands.Disarm, null, null);
+
+            Add("/boat", Boat.Spawn, null, null);
+            Add("/gosouth", Boat.MoveSouth, null, null);
+
+            Add("/v", VehicleCommands.Spawn, "s", "Usage: /v [model name]. Ex: /v Infernus");
         }
     }
 }
