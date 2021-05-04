@@ -68,28 +68,17 @@ SharpBridge::Vehicle^ SharpBridge::Entities::getVehicle(int id)
 	return apiVehicle::isVehicle(id) ? gcnew Vehicle(id) : nullptr;
 }
 
-void SharpBridge::Entities::deleteVehicle(int id)
-{
-	apiVehicle::deleteVehicle(id);
-}
-
 SharpBridge::Object^ SharpBridge::Entities::createObject(Vector3^ pos, Quaternion^ rot, unsigned int objHex,
 	unsigned int vWorld, bool hasOffset, unsigned int interior, int alpha) {
 
 	apiMath::Vector3 p(pos->x, pos->y, pos->z);
 	apiMath::Quaternion q(rot->x, rot->y, rot->z, rot->w);
-
-	return gcnew SharpBridge::Object(apiObjects::addNew(p, q, objHex, vWorld, hasOffset, interior, alpha));
+	return gcnew SharpBridge::Object(apiObjects::addNew(p, q, objHex, vWorld, hasOffset, interior, alpha, 200.0f));
 }
 
 SharpBridge::Object^ SharpBridge::Entities::getObject(int id)
 {
 	return apiObjects::isValid(id) ? gcnew SharpBridge::Object(id) : nullptr;
-}
-
-void SharpBridge::Entities::deleteObject(int id)
-{
-	apiObjects::remove(id);
 }
 
 SharpBridge::Dialog^ SharpBridge::Entities::createDialog(unsigned int id, String^ windowName, unsigned int columns)
