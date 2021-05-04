@@ -7,10 +7,15 @@ SharpBridge::Object::Object(int id)
 	this->id = id;
 }
 
+void SharpBridge::Object::Destroy()
+{
+	apiObjects::remove(this->id);
+}
+
 SharpBridge::Vector3^ SharpBridge::Object::getPos()
 {
 	apiMath::Vector3 p = apiObjects::get(id)->getPos();
-	return gcnew Vector3(p.x, p.y, p.x);
+	return gcnew Vector3(p.x, p.y, p.z);
 }
 
 SharpBridge::Quaternion^ SharpBridge::Object::getRot()
@@ -72,8 +77,8 @@ void SharpBridge::Object::moveObject(Vector3^ pos, Quaternion^ rot, unsigned int
 
 void SharpBridge::Object::setAudio(String^ audioName, int offset)
 {
-	msclr::interop::marshal_context ctx;
+	/*msclr::interop::marshal_context ctx;
 	const char* converted = ctx.marshal_as<const char*>(audioName);
 	char* s = _strdup(converted);
-	apiObjects::setAudio(id, s, offset);
+	apiObjects::setAudio(id, s, offset);*/
 }
