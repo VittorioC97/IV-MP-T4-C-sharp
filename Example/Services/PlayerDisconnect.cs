@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,16 +12,23 @@ namespace Example.Services
         public static void handleDisconnect(int playerid, int reason)
         {       
             if (!Game.AccountManager.IsOnline(playerid)) return;
-            Game.Account user = Game.AccountManager.Get(playerid);
-
-            Player player = Entities.getPlayer(playerid);
-            if (player != null)
+            try
             {
-                user.updateHealth(player.getHealth(), player.getArmor());
-                user.updatePos(player.getPos());
-            }
+                Game.Account user = Game.AccountManager.Get(playerid);
 
-            user.save();
+                Player player = Entities.getPlayer(playerid);
+                if (player != null)
+                {
+                    user.updateHealth(player.getHealth(), player.getArmor());
+                    user.updatePos(player.getPos());
+                }
+
+                user.save();
+            }
+            catch (Exception e) 
+            {
+                Console.WriteLine(e.ToString());
+            }
             Game.AccountManager.Remove(playerid);
         }
     }
