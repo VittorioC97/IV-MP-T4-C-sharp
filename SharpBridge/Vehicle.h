@@ -11,6 +11,7 @@ namespace SharpBridge{
 
 	public:
 		Vehicle(int id);
+		void Destroy();
 
 		Vector3^ getPosition();
 		Vector3^ getVelocity();
@@ -57,4 +58,3 @@ namespace SharpBridge{
 		void setStreamDistance(float f);
 	};
 }
-
