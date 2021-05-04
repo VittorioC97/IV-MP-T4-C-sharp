@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,24 +10,21 @@ using System.Threading.Tasks;
 namespace Example.Models
 {
     [Table("items")]
-    class Item
+    public class ItemEF
     {
         [Key]
         public int id { get; set; }
-        public byte type { get; set; }
+
+        [ForeignKey("entity")]
+        public int fk { get; set; }
+
+        public short type { get; set; }
         public short amount { get; set; }
 
-        [ForeignKey("container")]
-        public int fk { get; set; }
+        [JsonIgnore]
+        public virtual EntityEF entity { get; set; }
 
         [NotMapped]
         public bool mustSave { get; set; } //default is false
-    }
-
-    [Table("items")]
-    class UserItem : Item
-    {
-        [JsonIgnore]
-        public virtual UserContainer container { get; set; }
     }
 }
