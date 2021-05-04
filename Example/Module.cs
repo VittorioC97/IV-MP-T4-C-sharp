@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,8 +21,11 @@ namespace Example
             events = new Events();
             SharpBridge.bridgeServer.registerModuleEvents("Example.dll", events);
 
+            Services.ServerBoot.LoadVehicles.Load();
+            Services.ServerBoot.LoadItemTypes.LoadTypes();
+
             Commands.CommandsManager.Init();
-            Services.UpdateWeapons.StartTimer();    
+            Services.UpdateWeapons.StartTimer();
         }
     }
 }
