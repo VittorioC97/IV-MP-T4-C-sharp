@@ -49,15 +49,13 @@ namespace apiObjects
 	};
 
 	DLL int addNew(apiMath::Vector3 pos, apiMath::Quaternion rot, unsigned int objHex, 
-		unsigned int vWorld, bool hasOffset, unsigned int interior, int alpha);
+		unsigned int vWorld, bool hasOffset, unsigned int interior, int alpha, float streamDis = 200.0f);
 	DLL void remove(int id);
 	DLL bool isValid(int id);
-	DLL object* get(int id); //Throws exception
+	DLL object* get(int id); //Null or Pointer
 	DLL void getAll(std::vector<object*>& vec);
 
 	DLL void moveObject(int id, apiMath::Vector3 pos, apiMath::Quaternion rot, unsigned int time);
-
-	DLL void setAudio(int id, char* audioName, int offset);
 }
 
 #endif
