@@ -39,16 +39,17 @@ namespace Example.Commands
                             armor = 0,
                             moneyBank = 100
                         },
+                        // Spawns the player on grass, near the Broker Bus Depot, looking at Montauk Avenue
                         x = 1075.0f,
                         y = 278.0f,
-                        z = 30.2f,
+                        z = 30.5f,
                     };
                     uc.user.entity = uc;
 
                     accs.entities.Add(uc);
                     accs.SaveChanges();
 
-                    player.sendMsg($"Account created with pass '{pass}'. Use /login to proceed", ChatColor.SUCCESS);
+                    player.sendMsg($"Account created with password '{pass}'. Use /login to proceed", ChatColor.SUCCESS);
                 }
             }
             catch(DbUpdateException e)
@@ -104,7 +105,8 @@ namespace Example.Commands
                     player.cam_setPos(null, 1);
                     player.cam_attachOnPlayer(-1);
                     player.setWorld(1);
-                    player.drawInfoText("~g~Welcome back!", 5000);
+                    // Colors "Welcome back" green and the player’s name orange for 5 seconds
+                    player.drawInfoText($"~g~Welcome back~w~, ~COL_NET_13~'{player.getNick()}'~w~!", 5000);
 
                     List<short> givenAmmoTypes = new List<short>();
                     foreach(var item in acc.entity.items)
