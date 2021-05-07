@@ -8,8 +8,8 @@ namespace Example
 {
     static class ChatColor
     {
-        public static uint ERROR = 0xFFFF0000;
-        public static uint SUCCESS = 0xFF00FF00;
-        public static uint WHITE = 0xFFFFFFFF;
+        public static uint ERROR = 0xFFFF0000; //100% solid red
+        public static uint SUCCESS = 0xFF00FF00; //100% solid green
+        public static uint WHITE = 0xFFFFFFFF; //100% solid white
     }
 }
