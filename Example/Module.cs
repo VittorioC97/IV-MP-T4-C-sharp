@@ -17,7 +17,7 @@ namespace Example
         public static void Run()
         {
             Console.Clear();
-            Console.WriteLine("Alright Im running");
+            Console.WriteLine("Alright I'm running");
             events = new Events();
             SharpBridge.bridgeServer.registerModuleEvents("Example.dll", events);
 
