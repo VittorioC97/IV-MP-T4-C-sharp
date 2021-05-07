@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +19,7 @@ namespace Example.Commands
             player.setSkinId(id);
         }
 
-        //Skins 1-2 has the most variations for this command
+        //Skins 1-2 have the most variations for this command
         public static void ChangeClothes(SharpBridge.Player player, object[] param)
         {
             uint id = (uint)param[0];
@@ -38,7 +38,7 @@ namespace Example.Commands
             player.setClothes(id - 1, variation - 1);
         }
 
-        //Skins 1-2 has the most variations for this command
+        //Skins 1-2 have the most variations for this command
         public static void ChangeProperty(SharpBridge.Player player, object[] param)
         {
             uint id = (uint)param[0];
