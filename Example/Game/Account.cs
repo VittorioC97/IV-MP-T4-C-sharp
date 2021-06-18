@@ -1,12 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Example.Game
 {
-    class Account
+    public class Account
     {
         private Models.UserEF user { get; set; }
 
@@ -64,51 +63,21 @@ namespace Example.Game
             user.hp = (byte)hp;
             user.armor = (byte)armor;
         }
-        public void save()
-        {
-            try
-            {
-                using (Repositories.UserRepository accs = new Repositories.UserRepository())
-                {
-                    Console.WriteLine("Saving Player");
 
-                    bool mustAttach = false;
-                    foreach(Models.ItemEF item in user.entity.items)
-                    {
-                        if (item.id == 0) mustAttach = true;
-                        else if(item.mustSave)
-                        {
-                            item.mustSave = false;
-                            accs.Entry(item).State = System.Data.Entity.EntityState.Modified; //Forces it to update
-                        }
-                    }
-
-                    if (mustAttach) accs.users.Attach(user); //adds new items
-
-                    accs.Entry(user.entity).State = System.Data.Entity.EntityState.Modified;
-                    accs.Entry(user).State = System.Data.Entity.EntityState.Modified;
-                    accs.SaveChanges();
-
-                    Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(user.entity.items));
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-        }
         public string getName()
         {
             return user.name;
         }
 
-        public void updateWeapon(byte model, short amount)
+        public void save()
         {
-            Models.ItemTypesEF weaponItem = ItemTypesManager.GetWeaponFromGameWeapon(model);
-            if (weaponItem == null) return;
+            user.save();
+        }
 
-            Models.ItemEF item = user.entity.items.Where(i => i.type == weaponItem.weapon.ammoItem).FirstOrDefault();
-            if(item == null)
+        public void insertItem(short model, short amount, bool incrementIfExists = true)
+        {
+            Models.ItemEF item = user.entity.items.Where(i => i.type == model).FirstOrDefault();
+            if (item == null)
             {
                 item = new Models.ItemEF
                 {
@@ -120,11 +89,23 @@ namespace Example.Game
                 };
                 user.entity.items.Add(item);
             }
-            else if(item.amount != amount)
+            else if (item.amount != amount && incrementIfExists)
             {
                 item.amount = amount;
                 item.mustSave = true;
             }
+        }
+
+        public void updateWeapon(byte model, short amount)
+        {
+            Models.ItemTypesEF weaponItem = ItemTypesManager.GetAmmoFromGameWeapon(model);
+            if (weaponItem == null) return;
+            insertItem(weaponItem.weapon.ammoItem, amount);
+        }
+
+        public Models.ItemEF getItem(short model)
+        {
+            return user.entity.items.Where(i => i.type == model).FirstOrDefault();
         }
     }
 }

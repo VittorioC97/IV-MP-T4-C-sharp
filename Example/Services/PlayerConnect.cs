@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +9,9 @@ namespace Example.Services
 {
     public static class PlayerConnect
     {
-		static Vector3 spawnPos = new Vector3(1075.0f, 278.0f, 30.5f);
-		static Vector3 cameraPos = new Vector3(1075.0f, 278.0f, 35.5f);
-		static Vector3 cameraLookPos = new Vector3(1075.0f, 308.0f, 35.5f);
+		static Vector3 spawnPos = new Vector3(1080.19f, 278.101f, 30.2316f);
+		static Vector3 cameraPos = new Vector3(1080.19f, 278.101f, 35.2316f);
+		static Vector3 cameraLookPos = new Vector3(1080.19f, 308.101f, 35.2316f);
 		public static bool onPlayerConnect(int playerid)
 		{
 			Player player = Entities.getPlayer(playerid);
@@ -34,7 +34,6 @@ namespace Example.Services
 			tParams.@params.Add(buffer);
 			SharpBridge.Timer.Manager.RegisterTimer(PositionCamera, 2000, 1, tParams);
 
-			//Text that stays for 500 seconds (8 minutes and 20 seconds)
 			player.drawInfoText("Welcome " + player.getNick() + "~n~Use ~r~/register~w~ to create an account~n~Or ~b~/login~w~ to login", 500000);
 			return true;
 		}

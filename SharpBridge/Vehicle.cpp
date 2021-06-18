@@ -39,6 +39,11 @@ int SharpBridge::Vehicle::getId()
 	return veh->getId();
 }
 
+unsigned int SharpBridge::Vehicle::getModel()
+{
+	return veh->getModel();
+}
+
 int SharpBridge::Vehicle::getDriver()
 {
 	return veh->getDriver();

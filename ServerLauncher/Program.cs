@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using SharpBridge;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace ServerLauncher
 {
@@ -22,7 +16,7 @@ namespace ServerLauncher
                 configStr = file.ReadToEnd();
             }
 
-            var config = JsonSerializer.Deserialize<Configuration>(configStr);
+            var config = JsonConvert.DeserializeObject<Configuration>(configStr);
             SharpBridge.bridgeServer.startIVMPServer(config.port, config.name, config.location, config.url, config.masterList, config.gtaIV);
 
             Console.WriteLine("Loading modules");
@@ -33,14 +27,14 @@ namespace ServerLauncher
                 Type customerType = asm.GetType(module + ".Module");
                 if(customerType == null)
                 {
-                    Console.WriteLine("Namespace Module wasn't found");
+                    Console.WriteLine("Namespace Module wasnt found");
                     continue;
                 }
 
                 MethodInfo staticMethodInfo = customerType.GetMethod("Run");
                 if(staticMethodInfo == null)
                 {
-                    Console.WriteLine("Function Module::Run wasn't found");
+                    Console.WriteLine("Function Module::Run wasnt found");
                     continue;
                 }
                 staticMethodInfo.Invoke(null, null);

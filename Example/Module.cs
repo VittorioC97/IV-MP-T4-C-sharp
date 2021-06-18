@@ -1,12 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Entity;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Dynamic;
+﻿using System;
 
 namespace Example
 {
@@ -17,7 +9,7 @@ namespace Example
         public static void Run()
         {
             Console.Clear();
-            Console.WriteLine("Alright I'm running");
+            Console.WriteLine("Alright Im running");
             events = new Events();
             SharpBridge.bridgeServer.registerModuleEvents("Example.dll", events);
 

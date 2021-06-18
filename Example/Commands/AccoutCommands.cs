@@ -1,14 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity;
 using SharpBridge;
 using System.Data.SqlClient;
 using System.Data.Entity.Infrastructure;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Example.Commands
 {
@@ -39,17 +36,17 @@ namespace Example.Commands
                             armor = 0,
                             moneyBank = 100
                         },
-                        // Spawns the player on grass, near the Broker Bus Depot, looking at Montauk Avenue
                         x = 1075.0f,
                         y = 278.0f,
-                        z = 30.5f,
+                        z = 30.2f,
+                        createDate = DateTime.Now
                     };
                     uc.user.entity = uc;
 
                     accs.entities.Add(uc);
                     accs.SaveChanges();
 
-                    player.sendMsg($"Account created with password '{pass}'. Use /login to proceed", ChatColor.SUCCESS);
+                    player.sendMsg($"Account created with pass '{pass}'. Use /login to proceed", ChatColor.SUCCESS);
                 }
             }
             catch(DbUpdateException e)
@@ -92,7 +89,7 @@ namespace Example.Commands
                         return;
                     }
 
-                    Console.WriteLine(JsonSerializer.Serialize(acc));
+                    Console.WriteLine(JsonConvert.SerializeObject(acc));
 
                     Game.Account playerAccount = new Game.Account(acc);
                     Game.AccountManager.Add(player.getID(), playerAccount);
@@ -105,18 +102,18 @@ namespace Example.Commands
                     player.cam_setPos(null, 1);
                     player.cam_attachOnPlayer(-1);
                     player.setWorld(1);
-                    // Colors "Welcome back" green and the player’s name orange for 5 seconds
-                    player.drawInfoText($"~g~Welcome back~w~, ~COL_NET_13~'{player.getNick()}'~w~!", 5000);
+                    player.drawInfoText("~g~Welcome back!", 5000);
 
                     List<short> givenAmmoTypes = new List<short>();
                     foreach(var item in acc.entity.items)
                     {
                         Models.ItemTypesEF typ = Game.ItemTypesManager.GetItemTypeByItem(item);
-
                         if (typ.weapon != null)
                         {
+                            Console.WriteLine($"{item.type} is a weapon");
                             Models.ItemEF ammo = acc.entity.items.Where(j => j.type == typ.weapon.ammoItem).FirstOrDefault();
                             if (ammo == null || givenAmmoTypes.Count(j => j == ammo.type) != 0) continue;
+                            Console.WriteLine("Ammo found");
                             givenAmmoTypes.Add(ammo.type);
                             player.giveWeapon((uint)item.type, (uint)ammo.amount);
                         }

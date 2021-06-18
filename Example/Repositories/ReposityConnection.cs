@@ -1,15 +1,26 @@
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.IO;
+using System;
 
 namespace Example.Repositories
 {
+    public static class RepositoryConnection
+    {
+        public static readonly string cString;
+        static RepositoryConnection()
+        {
+            using (StreamReader file = new StreamReader("config.json"))
+            {
+                var values = JsonConvert.DeserializeObject<Dictionary<string, Object>>(file.ReadToEnd());
+                cString = values["database"].ToString();
+            }
+        }
+    }
     public class ReposityConnection : DbContext
     {
-        public ReposityConnection() : base("server=127.0.0.1;port=3307;database=csharp;uid=root;password=1234")
+        public ReposityConnection() : base(RepositoryConnection.cString)
         {
         }
     }

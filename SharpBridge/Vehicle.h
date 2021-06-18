@@ -19,6 +19,7 @@ namespace SharpBridge{
 		Vector3^ getTurnVelocity();
 
 		int getId();
+		unsigned int getModel();
 		int getDriver(); //Returns the current driver ID or 0
 		void setTune(unsigned int part, bool on); //part is 0-9
 		bool isTuned(unsigned int part);
@@ -58,3 +59,4 @@ namespace SharpBridge{
 		void setStreamDistance(float f);
 	};
 }
+

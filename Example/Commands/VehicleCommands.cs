@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,7 +21,7 @@ namespace Example.Commands
 
             int color = new Random().Next(0, 140);
             Vector3 pos = player.getPos();
-            pos.z += 1.0f; ;
+            pos.z += 1.0f;
             Vehicle veh = Entities.createVehicle(vehModel, pos, new Vector3(0.0f, 0.0f, player.getHeading()),
                 color, color, color, color, player.getWorld());
 

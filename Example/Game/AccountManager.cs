@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Example.Game
 {
-    static class AccountManager
+    public static class AccountManager
     {
         private static Dictionary<int, Account> players = new Dictionary<int, Account>();
         public static void Add(int playerid, Account player)

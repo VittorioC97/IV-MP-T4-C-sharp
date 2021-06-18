@@ -1,11 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Example.Models
 {
@@ -17,6 +13,7 @@ namespace Example.Models
         public float x { get; set; }
         public float y { get; set; }
         public float z { get; set; }
+        public DateTime createDate { get; set; }
 
         public virtual VehicleEF vehicle { get; set; }
         public virtual UserEF user { get; set; }

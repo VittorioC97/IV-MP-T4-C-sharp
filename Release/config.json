@@ -1,9 +1,10 @@
 {
 	"port": 8888,
-	"name": "C# Test Server",
+	"name": "C# Server Test",
 	"location": "Country",
 	"url": "www.iv-mp.eu",
 	"masterList": false,
 	"gtaIV": true,
-	"modules": ["Example"]
+	"modules": [ "Example" ],
+	"database": "server=127.0.0.1;port=3307;database=csharp;uid=root;password=1234"
 }
