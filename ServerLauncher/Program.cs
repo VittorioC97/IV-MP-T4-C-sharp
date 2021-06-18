@@ -27,14 +27,14 @@ namespace ServerLauncher
                 Type customerType = asm.GetType(module + ".Module");
                 if(customerType == null)
                 {
-                    Console.WriteLine("Namespace Module wasnt found");
+                    Console.WriteLine("Namespace Module wasn't found");
                     continue;
                 }
 
                 MethodInfo staticMethodInfo = customerType.GetMethod("Run");
                 if(staticMethodInfo == null)
                 {
-                    Console.WriteLine("Function Module::Run wasnt found");
+                    Console.WriteLine("Function Module::Run wasn't found");
                     continue;
                 }
                 staticMethodInfo.Invoke(null, null);
